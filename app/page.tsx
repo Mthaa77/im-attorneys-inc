@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useEffect, useMemo, useRef, useState } from "react";
+import type { TouchEvent } from "react";
 
 const ArrowIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -59,6 +60,7 @@ const MailIcon = () => (
 
 const FirmFilmPlayer = memo(function FirmFilmPlayer() {
   const filmRef = useRef<HTMLVideoElement>(null);
+  const lastTouchRef = useRef(0);
   const [filmMuted, setFilmMuted] = useState(true);
   const [filmEnded, setFilmEnded] = useState(false);
 
@@ -74,23 +76,46 @@ const FirmFilmPlayer = memo(function FirmFilmPlayer() {
     });
   }, []);
 
+  const setFilmSound = (muted: boolean) => {
+    const film = filmRef.current;
+    if (!film) return;
+
+    film.muted = muted;
+    film.defaultMuted = muted;
+    film.volume = 1;
+    if (muted) {
+      film.setAttribute("muted", "");
+    } else {
+      film.removeAttribute("muted");
+    }
+    setFilmMuted(muted);
+  };
+
   const handleFilmAction = () => {
     const film = filmRef.current;
     if (!film) return;
 
     if (filmEnded) {
       film.currentTime = 0;
-      film.muted = false;
-      setFilmMuted(false);
+      setFilmSound(false);
       setFilmEnded(false);
       void film.play();
       return;
     }
 
-    const nextMuted = !film.muted;
-    film.muted = nextMuted;
-    setFilmMuted(nextMuted);
+    setFilmSound(!film.muted);
     if (film.paused) void film.play();
+  };
+
+  const handleFilmTouch = (event: TouchEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    lastTouchRef.current = Date.now();
+    handleFilmAction();
+  };
+
+  const handleFilmClick = () => {
+    if (Date.now() - lastTouchRef.current < 700) return;
+    handleFilmAction();
   };
 
   return (
@@ -120,7 +145,8 @@ const FirmFilmPlayer = memo(function FirmFilmPlayer() {
       <button
         className="firm-film-sound"
         type="button"
-        onClick={handleFilmAction}
+        onClick={handleFilmClick}
+        onTouchEnd={handleFilmTouch}
         aria-pressed={!filmMuted}
         aria-label={filmEnded ? "Replay company film with sound" : filmMuted ? "Play company film with sound" : "Mute company film"}
       >
