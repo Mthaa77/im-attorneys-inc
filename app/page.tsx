@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const ArrowIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -300,6 +300,25 @@ export default function Home() {
   const [activeConcern, setActiveConcern] = useState(0);
   const [heroMessage, setHeroMessage] = useState(0);
   const [bailOpen, setBailOpen] = useState(true);
+  const [filmMuted, setFilmMuted] = useState(true);
+  const filmRef = useRef<HTMLVideoElement>(null);
+
+  const toggleFilmAudio = () => {
+    const film = filmRef.current;
+    if (!film) return;
+
+    const nextMuted = !film.muted;
+    film.muted = nextMuted;
+    film.volume = nextMuted ? 0 : 1;
+    setFilmMuted(nextMuted);
+
+    if (!nextMuted) {
+      void film.play().catch(() => {
+        film.muted = true;
+        setFilmMuted(true);
+      });
+    }
+  };
 
   const selectedPractice = practices[activePractice];
   const whatsappHref = useMemo(() => {
@@ -1190,15 +1209,17 @@ export default function Home() {
         <div className="firm-film-frame">
           <div className="firm-film-ornament" aria-hidden="true"><span>IM</span></div>
           <video
+            ref={filmRef}
             className="firm-film-video"
             autoPlay
             controls
             loop
-            muted
+            muted={filmMuted}
             playsInline
             preload="metadata"
             poster="/assets/im-attorneys-promo-poster.jpg"
             aria-label="IM Attorneys company promotional film"
+            onVolumeChange={() => setFilmMuted(filmRef.current?.muted ?? true)}
           >
             <source src="/assets/im-attorneys-company-film.mp4" type="video/mp4" />
             Your browser does not support this video.
@@ -1206,6 +1227,16 @@ export default function Home() {
           <div className="firm-film-caption" aria-hidden="true">
             <span>Company film</span><strong>01:44</strong>
           </div>
+          <button
+            className="firm-film-sound"
+            type="button"
+            onClick={toggleFilmAudio}
+            aria-pressed={!filmMuted}
+            aria-label={filmMuted ? "Play company film with sound" : "Mute company film"}
+          >
+            <span aria-hidden="true">{filmMuted ? "◖))" : "◖)))"}</span>
+            {filmMuted ? "Tap for sound" : "Sound on"}
+          </button>
         </div>
       </section>
 

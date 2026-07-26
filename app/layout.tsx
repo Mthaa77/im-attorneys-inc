@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://im-attorneys.gee7pipz.chatgpt.site"),
+  metadataBase: new URL("https://im-attorneys-inc-eta.vercel.app"),
   title: "IM Attorneys | Personal & Business Legal Counsel in Pretoria",
   description:
     "IM Attorneys is a 100% female black-owned law firm in Menlyn Maine, Pretoria, providing family, criminal, commercial, estate and litigation services.",
@@ -30,10 +30,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/assets/menlyn-maine-building.webp",
+        url: "/opengraph-image",
         width: 1200,
-        height: 800,
-        alt: "IM Attorneys at Menlyn Maine, Pretoria",
+        height: 630,
+        alt: "IM Attorneys — Purposeful legal counsel in Pretoria",
       },
     ],
   },
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "IM Attorneys | Legal Counsel in Pretoria",
     description:
       "Purposeful legal counsel for people and businesses from Menlyn Maine, Pretoria.",
-    images: ["/assets/menlyn-maine-building.webp"],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,
@@ -59,7 +59,7 @@ const legalServiceSchema = {
   "@type": "LegalService",
   name: "IM Attorneys",
   legalName: "Ingrid Mtsweni Attorneys Incorporated",
-  url: "https://im-attorneys.gee7pipz.chatgpt.site",
+  url: "https://im-attorneys-inc-eta.vercel.app",
   telephone: "+27 81 248 8048",
   email: "attorneys@iminc.co.za",
   address: {

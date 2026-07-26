@@ -5452,6 +5452,29 @@ footer {
   z-index: 2;
 }
 .firm-film-caption strong { color: #eee9dc; font-size: 8px; font-weight: 700; }
+.firm-film-sound {
+  align-items: center;
+  background: rgba(13, 16, 15, .86);
+  border: 1px solid rgba(223, 186, 91, .8);
+  border-radius: 999px;
+  bottom: 48px;
+  color: #f7f1de;
+  cursor: pointer;
+  display: flex;
+  font-size: 9px;
+  font-weight: 800;
+  gap: 8px;
+  letter-spacing: .1em;
+  padding: 11px 14px;
+  position: absolute;
+  right: 29px;
+  text-transform: uppercase;
+  z-index: 4;
+}
+.firm-film-sound span { color: #d8b45b; font-size: 13px; letter-spacing: -2px; }
+.firm-film-sound:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.firm-film-sound:hover { background: #d8b45b; color: #141615; }
+.firm-film-sound:hover span { color: #141615; }
 
 /* Featured Instagram reel */
 .social-feature {
@@ -6300,6 +6323,7 @@ button.floating-action {
   .firm-film-details { gap: 8px; letter-spacing: .09em; }
   .firm-film-frame { border-radius: 4px 30px 4px 30px; padding: 42px 18px 48px; }
   .firm-film-video { border-radius: 12px; }
+  .firm-film-sound { bottom: 43px; right: 23px; }
   .im-charter { padding: 86px 20px 34px; }
   .charter-intro h2 { font-size: 51px; }
   .charter-seal { margin-top: 34px; }
