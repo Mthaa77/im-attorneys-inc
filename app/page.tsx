@@ -1101,13 +1101,19 @@ export default function Home() {
       <section className="story-section" id="about">
         <div className="founder-portrait">
           <img
-            src="/assets/ingrid-mtsweni.webp"
+            src="/assets/ingrid-mtsweni-founder.webp"
             alt="Ingrid Mtsweni, founder and director of IM Attorneys"
-            width={1200}
-            height={1200}
+            width={1080}
+            height={1202}
             loading="lazy"
             decoding="async"
           />
+          <div className="founder-portrait-monogram" aria-hidden="true">IM</div>
+          <figcaption>
+            <span>Founder &amp; Director</span>
+            <strong>Ingrid Mtsweni</strong>
+            <small>Attorney · Pretoria</small>
+          </figcaption>
         </div>
         <div className="founder-story">
           <span className="section-label">Founder & Director</span>
@@ -1136,6 +1142,12 @@ export default function Home() {
             angle: the legal principles, the human consequences and the
             practical decisions a client must make next.
           </p>
+          <div className="founder-principles" aria-label="Ingrid Mtsweni's leadership principles">
+            <span><b>01</b> Human counsel</span>
+            <span><b>02</b> Strategic thinking</span>
+            <span><b>03</b> Clear direction</span>
+          </div>
+          <div className="founder-links"><a href="/about">Meet Ingrid&apos;s approach <ArrowIcon /></a><a href="#contact">Start a confidential conversation <ArrowIcon /></a></div>
         </div>
         <div className="team-stack" id="team">
           <header className="team-intro">
