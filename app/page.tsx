@@ -1168,6 +1168,47 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="firm-film" aria-labelledby="firm-film-title">
+        <div className="firm-film-intro">
+          <span className="section-label">The IM perspective</span>
+          <h2 id="firm-film-title">
+            A closer look at the
+            <em> practice behind the advice.</em>
+          </h2>
+          <p>
+            Step inside IM Attorneys: a practice built on thoughtful preparation,
+            clear counsel and a personal commitment to every client we represent.
+          </p>
+          <div className="firm-film-details" aria-label="Film details">
+            <span>IM Attorneys</span>
+            <i aria-hidden="true" />
+            <span>Menlyn Maine · Pretoria</span>
+            <i aria-hidden="true" />
+            <span>Company film</span>
+          </div>
+        </div>
+        <div className="firm-film-frame">
+          <div className="firm-film-ornament" aria-hidden="true"><span>IM</span></div>
+          <video
+            className="firm-film-video"
+            autoPlay
+            controls
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster="/assets/im-attorneys-promo-poster.jpg"
+            aria-label="IM Attorneys company promotional film"
+          >
+            <source src="/assets/im-attorneys-company-film.mp4" type="video/mp4" />
+            Your browser does not support this video.
+          </video>
+          <div className="firm-film-caption" aria-hidden="true">
+            <span>Company film</span><strong>01:44</strong>
+          </div>
+        </div>
+      </section>
+
       <section className="social-feature" aria-labelledby="social-feature-title">
         <div className="social-feature-copy">
           <div className="social-kicker">
