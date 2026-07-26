@@ -1,0 +1,21 @@
+"use client";
+
+import { useMemo, useState } from "react";
+
+const options = ["Personal or family matter", "Business or commercial matter", "Criminal defence or bail", "Claim, dispute or deadline", "General enquiry"];
+
+export default function ContactPage() {
+  const [matter, setMatter] = useState(options[0]);
+  const [name, setName] = useState("");
+  const [notes, setNotes] = useState("");
+  const whatsapp = useMemo(() => `https://wa.me/27812488048?text=${encodeURIComponent(`Hello IM Attorneys. My name is ${name || ""}. I would like help with: ${matter}. ${notes ? `Briefly: ${notes}` : ""}`)}`, [matter, name, notes]);
+  return (
+    <main className="editorial-page contact-page">
+      <header className="editorial-header"><a href="/" className="editorial-brand"><span>IM</span><i /><strong>IM Attorneys</strong></a><nav><a href="/#expertise">Practice areas</a><a href="/about">About the firm</a><a className="editorial-header-cta" href="tel:+27812488048">Call 081 248 8048</a></nav></header>
+      <section className="contact-hero"><span className="editorial-kicker">Contact IM Attorneys</span><h1>Let&apos;s make the next step <em>clear.</em></h1><p>You do not need perfect words, every document or a complete timeline before getting in touch. Tell us what has happened and what you need to protect. We will help organise the legal questions from there.</p><div className="contact-hero-rail"><a href="tel:+27812488048"><small>Call</small><strong>081 248 8048</strong></a><a href="mailto:attorneys@iminc.co.za"><small>Email</small><strong>attorneys@iminc.co.za</strong></a><a href="https://maps.google.com/?q=210+Amarand+Avenue+Pegasus+Building+Menlyn+Maine+Pretoria" target="_blank" rel="noreferrer"><small>Visit</small><strong>Menlyn Maine, Pretoria</strong></a></div></section>
+      <section className="contact-layout"><div className="contact-form-card"><div><span>Start here</span><h2>How can we help?</h2><p>A short, confidential first message is enough. For urgent bail matters, please call the firm directly.</p></div><label>Your matter<select value={matter} onChange={(event) => setMatter(event.target.value)}>{options.map((option) => <option key={option}>{option}</option>)}</select></label><label>Your name <input value={name} onChange={(event) => setName(event.target.value)} placeholder="Your full name" /></label><label>Briefly, what do you need help with? <textarea value={notes} onChange={(event) => setNotes(event.target.value)} maxLength={600} placeholder="Share only the essentials for now." /></label><a className="contact-submit" href={whatsapp} target="_blank" rel="noreferrer">Start a WhatsApp conversation <b>→</b></a><small className="contact-assurance">Your first contact is handled with discretion. This form does not create an attorney-client relationship.</small></div><aside className="contact-side"><div className="contact-urgent"><span>Urgent legal assistance</span><h2>Arrest or bail matter?</h2><p>Time matters after an arrest. Call the firm&apos;s 24/7 bail line for confidential guidance on the immediate next step.</p><a href="tel:+27812488048">Call the 24/7 bail line <b>→</b></a></div><div className="contact-office"><span>Meet with the firm</span><h3>Pegasus Building</h3><p>210 Amarand Avenue<br />Menlyn Maine, Pretoria</p><a href="https://maps.google.com/?q=210+Amarand+Avenue+Pegasus+Building+Menlyn+Maine+Pretoria" target="_blank" rel="noreferrer">Open directions <b>↗</b></a></div></aside></section>
+      <section className="contact-expect"><span>What happens after you get in touch</span><div><article><small>01</small><h3>We acknowledge your enquiry.</h3><p>General enquiries are acknowledged within one business day. Urgent bail assistance is available by phone 24/7.</p></article><article><small>02</small><h3>We clarify the starting point.</h3><p>We will identify the immediate legal question, information required and the most sensible next conversation.</p></article><article><small>03</small><h3>You decide the way forward.</h3><p>Clear advice should leave you informed, not pressured. You will understand the next step before meaningful work begins.</p></article></div></section>
+      <footer className="editorial-footer"><a href="/">IM Attorneys</a><span>Menlyn Maine · Pretoria · South Africa</span><a href="/insights">Read our insights</a></footer>
+    </main>
+  );
+}

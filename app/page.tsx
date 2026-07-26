@@ -79,6 +79,7 @@ const CheckIcon = () => (
 
 type Practice = {
   name: string;
+  slug: string;
   heading: string;
   description: string;
   approach: string;
@@ -88,6 +89,7 @@ type Practice = {
 const practices: Practice[] = [
   {
     name: "Family",
+    slug: "family-law",
     heading: "Family law, handled with clarity.",
     description:
       "Family disputes affect far more than paperwork. They can change where you live, how you parent and what financial security looks like. We provide calm, practical advice that protects your rights while keeping the human impact firmly in view.",
@@ -97,6 +99,7 @@ const practices: Practice[] = [
   },
   {
     name: "Estates",
+    slug: "estates-and-wills",
     heading: "Protect what you have built.",
     description:
       "A considered estate plan can spare the people you love uncertainty and unnecessary conflict. We assist clients to document their wishes clearly and guide families through the legal responsibilities that follow a death.",
@@ -106,6 +109,7 @@ const practices: Practice[] = [
   },
   {
     name: "State Claims",
+    slug: "state-claims",
     heading: "Accountability when the state causes harm.",
     description:
       "When unlawful conduct by the police or another public body causes harm, the path to accountability can be technical and time-sensitive. Early advice is important because special notice requirements and deadlines may apply.",
@@ -115,6 +119,7 @@ const practices: Practice[] = [
   },
   {
     name: "Criminal",
+    slug: "criminal-law",
     heading: "Decisive help when liberty is at stake.",
     description:
       "An arrest or criminal charge can place your freedom, reputation and livelihood under immediate pressure. You need a lawyer who can respond quickly, explain what is happening and prepare the next step with care.",
@@ -124,6 +129,7 @@ const practices: Practice[] = [
   },
   {
     name: "Commercial",
+    slug: "commercial-law",
     heading: "Legal structure for confident business.",
     description:
       "Strong businesses are built on clear agreements, responsible decisions and relationships that can withstand pressure. We help founders and companies understand risk before it becomes a costly dispute.",
@@ -133,6 +139,7 @@ const practices: Practice[] = [
   },
   {
     name: "Litigation",
+    slug: "litigation",
     heading: "A clear strategy for difficult disputes.",
     description:
       "Disputes can consume time, money and attention. The right strategy begins with understanding what success should look like—not simply rushing toward court.",
@@ -284,6 +291,7 @@ const faqs = [
 ];
 
 export default function Home() {
+  const [loadingPhase, setLoadingPhase] = useState<"entering" | "leaving" | "complete">("entering");
   const [activePractice, setActivePractice] = useState(0);
   const [journeyStep, setJourneyStep] = useState(1);
   const [matterNotes, setMatterNotes] = useState("");
@@ -298,6 +306,30 @@ export default function Home() {
     const message = `Hello IM Attorneys. I would like help with a ${selectedPractice.name.toLowerCase()} matter. ${matterNotes ? `Briefly: ${matterNotes}. ` : ""}Preferred contact: ${contactMethod}.`;
     return `https://wa.me/27812488048?text=${encodeURIComponent(message)}`;
   }, [contactMethod, matterNotes, selectedPractice]);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const root = document.documentElement;
+    root.classList.add("intro-active");
+
+    const revealTimer = window.setTimeout(
+      () => setLoadingPhase("leaving"),
+      reducedMotion ? 120 : 1350,
+    );
+    const completeTimer = window.setTimeout(
+      () => {
+        setLoadingPhase("complete");
+        root.classList.remove("intro-active");
+      },
+      reducedMotion ? 220 : 2250,
+    );
+
+    return () => {
+      window.clearTimeout(revealTimer);
+      window.clearTimeout(completeTimer);
+      root.classList.remove("intro-active");
+    };
+  }, []);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -360,7 +392,35 @@ export default function Home() {
   }, []);
 
   return (
-    <main id="top">
+    <>
+      {loadingPhase !== "complete" && (
+        <div
+          className={`site-intro ${loadingPhase === "leaving" ? "is-leaving" : ""}`}
+          role="status"
+          aria-live="polite"
+          aria-label="IM Attorneys website loading"
+        >
+          <div className="intro-ambient intro-ambient-one" aria-hidden="true" />
+          <div className="intro-ambient intro-ambient-two" aria-hidden="true" />
+          <div className="intro-frame" aria-hidden="true">
+            <span className="intro-corner intro-corner-tl" />
+            <span className="intro-corner intro-corner-tr" />
+            <span className="intro-corner intro-corner-bl" />
+            <span className="intro-corner intro-corner-br" />
+          </div>
+          <div className="intro-lockup">
+            <div className="intro-monogram" aria-hidden="true">
+              <span>I</span><i /><span>M</span>
+            </div>
+            <div className="intro-rule" aria-hidden="true"><i /></div>
+            <p>Ingrid Mtsweni Attorneys</p>
+            <small>Clarity · Purpose · Representation</small>
+          </div>
+          <div className="intro-progress" aria-hidden="true"><i /></div>
+        </div>
+      )}
+
+      <main id="top" className={loadingPhase === "complete" ? "site-ready" : ""}>
       <header className="floating-header">
         <a className="brand" href="#top" aria-label="IM Attorneys home">
           <span className="brand-monogram">IM</span>
@@ -371,20 +431,46 @@ export default function Home() {
           </span>
         </a>
 
-        <nav className="desktop-nav" aria-label="Primary navigation">
-          <span className="nav-orbit" aria-hidden="true" />
-          <a href="#expertise"><small>01</small>Expertise</a>
-          <a href="#about"><small>02</small>The firm</a>
-          <a href="#team"><small>03</small>Team</a>
-          <a href="#programme"><small>04</small>Programme</a>
-          <a href="#contact"><small>05</small>Contact</a>
-        </nav>
+        <details className="desktop-menu">
+          <summary aria-label="Open IM Attorneys menu">
+            <span className="nav-orbit" aria-hidden="true" />
+            <span>Explore the firm</span>
+            <i aria-hidden="true" />
+          </summary>
+          <div className="desktop-menu-panel">
+            <div className="menu-panel-intro">
+              <span>IM Attorneys</span>
+              <strong>Legal counsel, clearly mapped.</strong>
+              <p>Choose a practice area, explore the firm or begin a confidential conversation.</p>
+              <a href="/contact">Book a consultation <ArrowIcon /></a>
+            </div>
+            <nav className="menu-practice-grid" aria-label="Practice areas">
+              <span className="menu-group-label">Practice areas</span>
+              {practices.map((practice, index) => (
+                <a href={`/services/${practice.slug}`} key={practice.slug}>
+                  <small>{String(index + 1).padStart(2, "0")}</small>
+                  <span>{practice.name}</span>
+                  <ArrowIcon />
+                </a>
+              ))}
+            </nav>
+            <nav className="menu-page-links" aria-label="Firm pages">
+              <span className="menu-group-label">The firm</span>
+              <a href="/about">Our approach <ArrowIcon /></a>
+              <a href="/about#team">Meet the team <ArrowIcon /></a>
+              <a href="#programme">Vacation Programme <ArrowIcon /></a>
+              <a href="/insights">Insights & guidance <ArrowIcon /></a>
+              <a href="/contact">Contact IM Attorneys <ArrowIcon /></a>
+              <a className="menu-bail-link" href="tel:+27812488048"><ShieldIcon /> 24/7 urgent bail</a>
+            </nav>
+          </div>
+        </details>
 
         <div className="header-actions">
           <a className="header-phone" href="tel:+27812488048">
             <PhoneIcon /> <span>081 248 8048</span>
           </a>
-          <a className="button button-dark header-cta" href="#contact">
+          <a className="button button-dark header-cta" href="/contact">
             Book a consultation <ArrowIcon />
           </a>
         </div>
@@ -395,11 +481,16 @@ export default function Home() {
             <span />
           </summary>
           <nav aria-label="Mobile navigation">
-            <a href="#expertise" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Expertise</a>
-            <a href="#about" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>The firm</a>
-            <a href="#team" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Our team</a>
+            <span className="mobile-menu-label">Practice areas</span>
+            {practices.map((practice) => (
+              <a href={`/services/${practice.slug}`} key={practice.slug} onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{practice.name} <ArrowIcon /></a>
+            ))}
+            <span className="mobile-menu-label">The firm</span>
+            <a href="/about" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>The firm</a>
+            <a href="/about#team" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Our team</a>
             <a href="#programme" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Vacation Programme</a>
-            <a href="#contact" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Book a consultation</a>
+            <a href="/insights" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Insights</a>
+            <a href="/contact" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Book a consultation</a>
             <a className="mobile-call" href="tel:+27812488048" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>
               <PhoneIcon /> Call 081 248 8048
             </a>
@@ -486,9 +577,15 @@ export default function Home() {
           <h2>life and business</h2>
         </div>
         <div className="preview-links">
-          {["Family law", "Commercial law", "Wills & estates", "Litigation", "Bail applications"].map(
-            (item, index) => (
-              <a href="#expertise" key={item}>
+          {[
+            ["Family law", "family-law"],
+            ["Commercial law", "commercial-law"],
+            ["Wills & estates", "estates-and-wills"],
+            ["Litigation", "litigation"],
+            ["Bail applications", "criminal-law"],
+          ].map(
+            ([item, slug], index) => (
+              <a href={`/services/${slug}`} key={item}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 {item}
               </a>
@@ -630,12 +727,14 @@ export default function Home() {
                   <span key={matter}>{matter}</span>
                 ))}
               </div>
-              <button
-                className="button button-gold-outline"
-                onClick={() => setJourneyStep(1)}
-              >
-                Discuss your matter <ArrowIcon />
-              </button>
+              <div className="practice-detail-actions">
+                <button className="button button-gold-outline" onClick={() => setJourneyStep(1)}>
+                  Discuss your matter <ArrowIcon />
+                </button>
+                <a href={`/services/${selectedPractice.slug}`} className="practice-page-link">
+                  Explore {selectedPractice.name} law <ArrowIcon />
+                </a>
+              </div>
             </div>
           </article>
         </div>
@@ -1273,7 +1372,7 @@ export default function Home() {
         <div className="footer-portrait">
           <span className="section-label">Ingrid Mtsweni Attorneys</span>
           <h2>Your next step can begin with one clear conversation.</h2>
-          <a className="footer-primary-action" href="#contact">
+          <a className="footer-primary-action" href="/contact">
             Book a consultation <ArrowIcon />
           </a>
         </div>
@@ -1297,9 +1396,10 @@ export default function Home() {
           <nav aria-label="Footer navigation">
             <span>Explore</span>
             <a href="#expertise">Expertise</a>
-            <a href="#about">The firm</a>
-            <a href="#team">Our team</a>
+            <a href="/about">The firm</a>
+            <a href="/about#team">Our team</a>
             <a href="#programme">Vacation Programme</a>
+            <a href="/insights">Insights</a>
           </nav>
           <nav aria-label="Social and contact links">
             <span>Connect</span>
@@ -1371,6 +1471,7 @@ export default function Home() {
           </a>
         </div>
       </aside>
-    </main>
+      </main>
+    </>
   );
 }
