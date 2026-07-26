@@ -108,7 +108,10 @@ const FirmFilmPlayer = memo(function FirmFilmPlayer() {
         onPlay={() => setFilmEnded(false)}
         onVolumeChange={() => setFilmMuted(filmRef.current?.muted ?? true)}
       >
-        <source src="/assets/im-attorneys-company-film.mp4" type="video/mp4" />
+        <source
+          src="https://im-attorneys.gee7pipz.chatgpt.site/assets/im-attorneys-company-film.mp4?v=20260726"
+          type="video/mp4"
+        />
         Your browser does not support this video.
       </video>
       <div className="firm-film-caption" aria-hidden="true">
