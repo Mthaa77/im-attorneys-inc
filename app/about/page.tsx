@@ -28,8 +28,14 @@ export default function AboutPage() {
       </header>
 
       <section className="editorial-hero about-hero">
-        <div><span className="editorial-kicker">About IM Attorneys</span><h1>Rigorous legal thinking.<br /><em>Human</em> counsel.</h1><p>IM Attorneys is a boutique Pretoria law firm for people and businesses who need legal advice that feels clear, considered and connected to real life.</p><a className="editorial-primary" href="/contact">Begin a conversation <b>→</b></a></div>
-        <figure><img src="/assets/ingrid-mtsweni.webp" alt="Ingrid Mtsweni, founder and director of IM Attorneys" width={1200} height={1200} /><figcaption><span>Founder & Director</span><strong>Ingrid Mtsweni</strong></figcaption></figure>
+        <div className="about-hero-copy">
+          <span className="editorial-kicker">About IM Attorneys</span>
+          <h1>Rigorous legal thinking.<br /><em>Human</em> counsel.</h1>
+          <p>Led by founder and director Ingrid Mtsweni, IM Attorneys is a boutique Pretoria law firm for people and businesses who need legal advice that feels clear, considered and connected to real life.</p>
+          <div className="about-hero-actions"><a className="editorial-primary" href="/contact">Begin a conversation <b>→</b></a><a href="#founder">Meet our founder <b>↓</b></a></div>
+          <div className="about-hero-credentials"><span><small>Founded</small><strong>2023</strong></span><span><small>Based in</small><strong>Menlyn Maine</strong></span><span><small>Ownership</small><strong>100% female black-owned</strong></span></div>
+        </div>
+        <figure className="about-founder-portrait"><img src="/assets/ingrid-mtsweni-founder.webp" alt="Ingrid Mtsweni, founder and director of IM Attorneys" width={1080} height={1202} /><figcaption><span>Founder & Director</span><strong>Ingrid Mtsweni</strong><small>Attorney · Strategist · Firm leader</small></figcaption><blockquote>“The law should give people direction, not distance.”</blockquote></figure>
         <div className="editorial-hero-mark" aria-hidden="true">IM</div>
       </section>
 
@@ -47,9 +53,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="about-founder">
-        <figure><img src="/assets/im-team-office.jpg" alt="IM Attorneys team working together in the office" width={1200} height={900} /></figure>
-        <div><span className="editorial-kicker">A firm built with purpose</span><h2>Built at the intersection of law, empathy and strategy.</h2><p>Ingrid Mtsweni founded IM Attorneys in 2023 after building experience across private practice and the corporate environment. Her approach is shaped by a simple belief: excellent legal work must account for both the legal principles and the human consequences of a decision.</p><p>That perspective runs through the firm—from the first enquiry to the preparation of a brief, the explanation of a strategy and representation when the stakes are high.</p><div className="about-signature"><strong>Ingrid Mtsweni</strong><span>Attorney · Founder · Director</span></div></div>
+      <section id="founder" className="about-founder">
+        <figure><img src="/assets/im-team-office.jpg" alt="IM Attorneys team working together in the office" width={1200} height={900} /><figcaption><span>Purpose in practice</span><strong>A boutique firm with personal accountability.</strong></figcaption></figure>
+        <div><span className="editorial-kicker">A firm built with purpose</span><h2>Built at the intersection of law, empathy and strategy.</h2><p>Ingrid Mtsweni founded IM Attorneys in 2023 after building experience across private practice and the corporate environment. Her approach is shaped by a simple belief: excellent legal work must account for both the legal principles and the human consequences of a decision.</p><p>Under her leadership, every matter begins with careful listening and a disciplined view of the facts. The aim is not to overwhelm clients with legal language, but to translate complexity into choices, priorities and a purposeful route forward.</p><div className="about-founder-beliefs"><span>Clear communication</span><span>Ethical representation</span><span>Commercial awareness</span></div><div className="about-signature"><strong>Ingrid Mtsweni</strong><span>Attorney · Founder · Director</span></div><a className="about-founder-cta" href="/contact">Request a consultation with the firm <b>→</b></a></div>
       </section>
 
       <section className="about-principles"><div className="editorial-section-heading"><span>The IM Standard</span><h2>The principles behind every brief.</h2><p>Legal excellence is not only measured by what is argued. It is felt in how carefully a matter is understood and how purposefully every next step is chosen.</p></div><div className="about-principle-grid">{principles.map(([number, title, copy]) => <article key={number}><small>{number}</small><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
