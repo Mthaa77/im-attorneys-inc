@@ -119,18 +119,20 @@ export function generateStaticParams() {
   return Object.keys(services).map((service) => ({ service }));
 }
 
-export function generateMetadata({ params }: { params: { service: string } }): Metadata {
-  const page = services[params.service];
+export async function generateMetadata({ params }: { params: Promise<{ service: string }> }): Promise<Metadata> {
+  const { service } = await params;
+  const page = services[service];
   if (!page) return {};
   return {
     title: `${page.eyebrow} | IM Attorneys Pretoria`,
     description: page.summary,
-    alternates: { canonical: `/services/${params.service}` },
+    alternates: { canonical: `/services/${service}` },
   };
 }
 
-export default function ServiceDetailPage({ params }: { params: { service: string } }) {
-  const page = services[params.service];
+export default async function ServiceDetailPage({ params }: { params: Promise<{ service: string }> }) {
+  const { service } = await params;
+  const page = services[service];
   if (!page) notFound();
 
   return (
