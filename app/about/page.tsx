@@ -23,7 +23,7 @@ export default function AboutPage() {
   return (
     <main className="editorial-page about-page">
       <header className="editorial-header">
-        <a href="/" className="editorial-brand"><span>IM</span><i /><strong>IM Attorneys</strong></a>
+        <a href="/" className="editorial-brand editorial-brand-logo"><img src="https://im-attorneys.gee7pipz.chatgpt.site/assets/im-attorneys-incorporated-logo.webp" alt="Ingrid Mtsweni Attorneys Incorporated" width={1200} height={400} /></a>
         <nav><a href="/#expertise">Practice areas</a><a href="/insights">Insights</a><a className="editorial-header-cta" href="/contact">Contact the firm</a></nav>
       </header>
 
@@ -68,7 +68,7 @@ export default function AboutPage() {
       <section id="team" className="about-team"><div className="editorial-section-heading"><span>Our legal team</span><h2>Rigour, empathy & resolve.</h2></div><div className="about-team-grid"><article><img src="/assets/katlego-seitisho.webp" alt="Katlego Seitisho, Litigation Attorney" width={1000} height={1000} /><span>Litigation Attorney</span><h3>Katlego Seitisho</h3></article><article><img src="/assets/mmabatho-moncha.webp" alt="Mmabatho Moncha, Candidate Attorney" width={1000} height={1000} /><span>Candidate Attorney</span><h3>Mmabatho Moncha</h3></article><div className="about-team-note"><strong>100% female black-owned</strong><p>Grounded in ethical integrity, Ubuntu, excellence and representation.</p><a href="/contact">Meet the firm in Menlyn Maine <b>→</b></a></div></div></section>
 
       <section className="editorial-closing"><span>IM Attorneys · Menlyn Maine, Pretoria</span><h2>One clear conversation can change what happens next.</h2><p>Tell us what you are facing. We will help organise the legal questions and guide you toward the right next step.</p><a href="/contact">Book a consultation <b>→</b></a></section>
-      <footer className="editorial-footer"><a href="/">IM Attorneys</a><span>Information on this website is general and does not constitute legal advice.</span><a href="/insights">Read our insights</a></footer>
+      <footer className="editorial-footer"><a href="/" className="editorial-footer-logo"><img src="https://im-attorneys.gee7pipz.chatgpt.site/assets/im-attorneys-incorporated-logo.webp" alt="Ingrid Mtsweni Attorneys Incorporated" width={1200} height={400} /></a><span>Information on this website is general and does not constitute legal advice.</span><a href="/insights">Read our insights</a></footer>
     </main>
   );
 }
