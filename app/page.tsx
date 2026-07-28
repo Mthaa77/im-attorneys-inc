@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import type { TouchEvent } from "react";
 
 const ArrowIcon = () => (
@@ -328,10 +328,10 @@ const concernGuides = [
 ];
 
 const heroMessages = [
-  "life\u2019s defining moments.",
-  "business in motion.",
-  "families in transition.",
-  "rights worth protecting.",
+  "For life\u2019s defining moments.",
+  "For business in motion.",
+  "For families in transition.",
+  "For rights worth protecting.",
 ];
 
 const tickerItems = [
@@ -390,6 +390,36 @@ const faqs = [
   },
 ];
 
+const clientPriorities = [
+  {
+    title: "Protect my family",
+    practice: "Family law",
+    insight: "A calm, structured route through separation, parenting, maintenance or protection concerns.",
+  },
+  {
+    title: "Protect my freedom",
+    practice: "Criminal law",
+    insight: "Decisive advice when an arrest, charge or urgent bail decision puts liberty and reputation at risk.",
+  },
+  {
+    title: "Protect my business",
+    practice: "Commercial law",
+    insight: "Commercially aware guidance for agreements, governance, disputes and decisions that cannot drift.",
+  },
+  {
+    title: "Protect my legacy",
+    practice: "Estates & wills",
+    insight: "Clear planning for property, succession and the people who matter after you.",
+  },
+];
+
+const briefItems = [
+  "A short timeline of what happened",
+  "Relevant letters, messages or agreements",
+  "Names of the people or organisations involved",
+  "Any court date, deadline or urgent risk",
+];
+
 export default function Home() {
   const [loadingPhase, setLoadingPhase] = useState<"entering" | "leaving" | "complete">("entering");
   const [activePractice, setActivePractice] = useState(0);
@@ -399,13 +429,28 @@ export default function Home() {
   const [consultationType, setConsultationType] = useState("Personal matter");
   const [activeConcern, setActiveConcern] = useState(0);
   const [heroMessage, setHeroMessage] = useState(0);
-  const [bailOpen, setBailOpen] = useState(true);
+  const [bailOpen, setBailOpen] = useState(false);
+  const [priorityGoal, setPriorityGoal] = useState(0);
+  const [priorityTiming, setPriorityTiming] = useState("This week");
+  const [briefReady, setBriefReady] = useState<string[]>([]);
 
   const selectedPractice = practices[activePractice];
   const whatsappHref = useMemo(() => {
     const message = `Hello IM Attorneys. I would like help with a ${selectedPractice.name.toLowerCase()} matter. ${matterNotes ? `Briefly: ${matterNotes}. ` : ""}Preferred contact: ${contactMethod}.`;
     return `https://wa.me/27812488048?text=${encodeURIComponent(message)}`;
   }, [contactMethod, matterNotes, selectedPractice]);
+  const priorityHref = useMemo(() => {
+    const priority = clientPriorities[priorityGoal];
+    const message = `Hello IM Attorneys. I would like a confidential consultation about ${priority.title.toLowerCase()}. Timing: ${priorityTiming}. Please help me understand the best next step.`;
+    return `https://wa.me/27812488048?text=${encodeURIComponent(message)}`;
+  }, [priorityGoal, priorityTiming]);
+  const briefHref = useMemo(() => {
+    const prepared = briefReady.length
+      ? `I already have: ${briefReady.join(", ")}.`
+      : "I am not sure what to prepare yet.";
+    const message = `Hello IM Attorneys. I would like to prepare for a first consultation. ${prepared} Please guide me on the next step.`;
+    return `https://wa.me/27812488048?text=${encodeURIComponent(message)}`;
+  }, [briefReady]);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -429,6 +474,12 @@ export default function Home() {
       window.clearTimeout(completeTimer);
       root.classList.remove("intro-active");
     };
+  }, []);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setTimeout(() => setBailOpen(true), 4800);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -534,14 +585,15 @@ export default function Home() {
         <details className="desktop-menu">
           <summary aria-label="Open IM Attorneys menu">
             <span className="nav-orbit" aria-hidden="true" />
-            <span>Explore the firm</span>
+            <span className="menu-trigger-copy"><small>Directory</small><strong>Explore the firm</strong></span>
             <i aria-hidden="true" />
           </summary>
           <div className="desktop-menu-panel">
             <div className="menu-panel-intro">
-              <span>IM Attorneys</span>
+              <span>Private client intake · Pretoria</span>
               <strong>Legal counsel, clearly mapped.</strong>
               <p>Choose a practice area, explore the firm or begin a confidential conversation.</p>
+              <div className="menu-availability"><i /> Enquiries open</div>
               <a href="/contact">Book a consultation <ArrowIcon /></a>
             </div>
             <nav className="menu-practice-grid" aria-label="Practice areas">
@@ -556,11 +608,11 @@ export default function Home() {
             </nav>
             <nav className="menu-page-links" aria-label="Firm pages">
               <span className="menu-group-label">The firm</span>
-              <a href="/about">Our approach <ArrowIcon /></a>
-              <a href="/about#team">Meet the team <ArrowIcon /></a>
-              <a href="#programme">Vacation Programme <ArrowIcon /></a>
-              <a href="/insights">Insights & guidance <ArrowIcon /></a>
-              <a href="/contact">Contact IM Attorneys <ArrowIcon /></a>
+              <a href="/about"><span><strong>Our approach</strong><small>How we advise</small></span><ArrowIcon /></a>
+              <a href="/about#team"><span><strong>Meet the team</strong><small>Your legal counsel</small></span><ArrowIcon /></a>
+              <a href="#programme"><span><strong>Vacation Programme</strong><small>Future practitioners</small></span><ArrowIcon /></a>
+              <a href="/insights"><span><strong>Insights & guidance</strong><small>Practical perspective</small></span><ArrowIcon /></a>
+              <a href="/contact"><span><strong>Contact the firm</strong><small>Begin privately</small></span><ArrowIcon /></a>
               <a className="menu-bail-link" href="tel:+27812488048"><ShieldIcon /> 24/7 urgent bail</a>
             </nav>
           </div>
@@ -600,9 +652,13 @@ export default function Home() {
 
       <section className="hero-shell">
         <div className="hero-copy">
-          <div className="hero-kicker">Ingrid Mtsweni Attorneys <span /></div>
+          <div className="hero-kicker">
+            <span>Ingrid Mtsweni Attorneys</span>
+            <i aria-hidden="true" />
+            <small>Pretoria · South Africa</small>
+          </div>
           <h1>
-            <span className="hero-static">Legal clarity for</span>
+            <span className="hero-static">Counsel with clarity.</span>
             <span className="hero-loop-window" aria-live="off">
               <span className="hero-loop-text" key={heroMessages[heroMessage]}>
                 {heroMessages[heroMessage]}
@@ -615,6 +671,12 @@ export default function Home() {
             into clear choices, a purposeful strategy and representation that
             keeps you informed at every step.
           </p>
+          <div className="hero-practice-line" aria-label="Featured practice areas">
+            <span>Family</span>
+            <span>Commercial</span>
+            <span>Criminal</span>
+            <span>Litigation</span>
+          </div>
           <div className="hero-actions">
             <a className="button button-dark" href="#contact">
               Book a consultation <ArrowIcon />
@@ -631,6 +693,7 @@ export default function Home() {
         </div>
 
         <div className="hero-photo">
+          <div className="hero-photo-mark" aria-hidden="true">IM</div>
           <img
             src="/assets/menlyn-maine-building.webp"
             alt="Pegasus Building in Menlyn Maine, Pretoria, where IM Attorneys is based"
@@ -638,6 +701,11 @@ export default function Home() {
             height={800}
             fetchPriority="high"
           />
+          <div className="hero-photo-label">
+            <span>Personal counsel</span>
+            <i aria-hidden="true" />
+            <span>Purposeful strategy</span>
+          </div>
           <div className="building-caption">
             <span>Our Pretoria office</span>
             <strong>Pegasus Building</strong>
@@ -944,6 +1012,110 @@ export default function Home() {
               General enquiries are acknowledged within one business day. Urgent bail assistance is available by phone 24/7.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="onboarding-suite" id="start">
+        <div className="onboarding-heading">
+          <span className="section-label">A more considered first step</span>
+          <h2>Begin with what matters—not legal jargon.</h2>
+          <p>Two private, guided tools help you identify the right route and arrive at your first conversation with greater clarity.</p>
+        </div>
+
+        <div className="onboarding-grid">
+          <article className="priority-compass">
+            <div className="onboarding-card-head">
+              <span>01 · Legal priority compass</span>
+              <small>About 30 seconds</small>
+            </div>
+            <h3>What needs protecting most?</h3>
+            <p>Choose the outcome closest to your situation. We will shape a more relevant starting point.</p>
+            <div className="priority-options" role="group" aria-label="Choose your legal priority">
+              {clientPriorities.map((priority, index) => (
+                <button
+                  type="button"
+                  key={priority.title}
+                  className={priorityGoal === index ? "selected" : ""}
+                  onClick={() => setPriorityGoal(index)}
+                  aria-pressed={priorityGoal === index}
+                >
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <strong>{priority.title}</strong>
+                  <i><ArrowIcon /></i>
+                </button>
+              ))}
+            </div>
+            <div className="priority-result" aria-live="polite">
+              <div>
+                <small>Your suggested route</small>
+                <strong>{clientPriorities[priorityGoal].practice}</strong>
+              </div>
+              <p>{clientPriorities[priorityGoal].insight}</p>
+              <div className="timing-selector" aria-label="When do you need help?">
+                <span>When do you need help?</span>
+                {["Today", "This week", "Planning ahead"].map((timing) => (
+                  <button
+                    type="button"
+                    key={timing}
+                    className={priorityTiming === timing ? "selected" : ""}
+                    onClick={() => setPriorityTiming(timing)}
+                    aria-pressed={priorityTiming === timing}
+                  >
+                    {timing}
+                  </button>
+                ))}
+              </div>
+              <a href={priorityHref} target="_blank" rel="noreferrer">
+                Request a tailored consultation <ArrowIcon />
+              </a>
+            </div>
+          </article>
+
+          <article className="brief-builder">
+            <div className="onboarding-card-head">
+              <span>02 · First-brief atelier</span>
+              <small>Private checklist</small>
+            </div>
+            <div className="brief-intro">
+              <div className="brief-progress" style={{ "--progress": `${briefReady.length * 25}%` } as CSSProperties}>
+                <strong>{briefReady.length}/4</strong>
+                <small>ready</small>
+              </div>
+              <div>
+                <h3>Prepare without feeling overwhelmed.</h3>
+                <p>You do not need a perfect file. Select what you already have and we will help with the rest.</p>
+              </div>
+            </div>
+            <div className="brief-checklist">
+              {briefItems.map((item) => {
+                const checked = briefReady.includes(item);
+                return (
+                  <button
+                    type="button"
+                    key={item}
+                    className={checked ? "checked" : ""}
+                    onClick={() => setBriefReady((current) =>
+                      checked ? current.filter((entry) => entry !== item) : [...current, item]
+                    )}
+                    aria-pressed={checked}
+                  >
+                    <span>{checked && <CheckIcon />}</span>
+                    <strong>{item}</strong>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="brief-reassurance" aria-live="polite">
+              <ShieldIcon />
+              <p>
+                <strong>{briefReady.length === 4 ? "You are well prepared." : briefReady.length > 0 ? "You already have enough to begin." : "It is completely fine to begin with nothing prepared."}</strong>
+                <span>Your attorney can identify what is relevant after hearing your story.</span>
+              </p>
+            </div>
+            <a className="brief-cta" href={briefHref} target="_blank" rel="noreferrer">
+              Send my consultation brief <ArrowIcon />
+            </a>
+          </article>
         </div>
       </section>
 
@@ -1570,6 +1742,12 @@ export default function Home() {
             Time matters after an arrest. Call the firm&apos;s 24/7 bail line
             for immediate, confidential guidance on the next legal step.
           </p>
+          <div className="bail-response-status"><i /><span>24/7 response line active</span></div>
+          <div className="bail-route" aria-label="Urgent bail response process">
+            <span><small>01</small> Call now</span>
+            <i aria-hidden="true" />
+            <span><small>02</small> Receive immediate guidance</span>
+          </div>
           <a href="tel:+27812488048">
             Call the 24/7 bail line <PhoneIcon />
           </a>
