@@ -303,7 +303,7 @@ const concernGuides = [
     copy:
       "Divorce, parental disputes, maintenance concerns and protection matters can escalate quickly. A confidential consultation can help you identify urgent safeguards, understand your rights and choose a considered way forward.",
     action: "Discuss a family matter",
-    href: "#contact",
+    href: "/#contact",
   },
   {
     label: "A contract or business dispute",
@@ -313,7 +313,7 @@ const concernGuides = [
     copy:
       "Before signing, cancelling, responding or escalating, understand the legal and commercial consequences. We help businesses assess exposure, preserve evidence and select a strategy that supports the bigger objective.",
     action: "Discuss a business matter",
-    href: "#contact",
+    href: "/#contact",
   },
   {
     label: "A claim, summons or legal deadline",
@@ -323,7 +323,7 @@ const concernGuides = [
     copy:
       "Court documents, claims against the state and formal notices may carry strict time periods. Share the documents with the firm as early as possible so the requirements and available response can be assessed.",
     action: "Request an assessment",
-    href: "#contact",
+    href: "/#contact",
   },
 ];
 
@@ -573,7 +573,7 @@ export default function Home() {
 
       <main id="top" className={loadingPhase === "complete" ? "site-ready" : ""}>
       <header className="floating-header">
-        <a className="brand" href="#top" aria-label="IM Attorneys home">
+        <a className="brand" href="/#top" aria-label="IM Attorneys home">
           <span className="brand-monogram">IM</span>
           <span className="brand-divider" />
           <span className="brand-copy">
@@ -610,7 +610,7 @@ export default function Home() {
               <span className="menu-group-label">The firm</span>
               <a href="/about"><span><strong>Our approach</strong><small>How we advise</small></span><ArrowIcon /></a>
               <a href="/about#team"><span><strong>Meet the team</strong><small>Your legal counsel</small></span><ArrowIcon /></a>
-              <a href="#programme"><span><strong>Vacation Programme</strong><small>Future practitioners</small></span><ArrowIcon /></a>
+              <a href="/#programme"><span><strong>Vacation Programme</strong><small>Future practitioners</small></span><ArrowIcon /></a>
               <a href="/insights"><span><strong>Insights & guidance</strong><small>Practical perspective</small></span><ArrowIcon /></a>
               <a href="/contact"><span><strong>Contact the firm</strong><small>Begin privately</small></span><ArrowIcon /></a>
               <a className="menu-bail-link" href="tel:+27812488048"><ShieldIcon /> 24/7 urgent bail</a>
@@ -640,7 +640,7 @@ export default function Home() {
             <span className="mobile-menu-label">The firm</span>
             <a href="/about" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>The firm</a>
             <a href="/about#team" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Our team</a>
-            <a href="#programme" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Vacation Programme</a>
+            <a href="/#programme" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Vacation Programme</a>
             <a href="/insights" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Insights</a>
             <a href="/contact" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>Book a consultation</a>
             <a className="mobile-call" href="tel:+27812488048" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>
@@ -678,7 +678,7 @@ export default function Home() {
             <span>Litigation</span>
           </div>
           <div className="hero-actions">
-            <a className="button button-dark" href="#contact">
+            <a className="button button-dark" href="/#contact">
               Book a consultation <ArrowIcon />
             </a>
             <a className="button button-outline" href="tel:+27812488048">
@@ -859,7 +859,7 @@ export default function Home() {
             <span>Ingrid Mtsweni</span>
             <small>Attorney · Founder · Director</small>
           </div>
-          <a className="welcome-link" href="#contact">
+          <a className="welcome-link" href="/#contact">
             Tell us what you are facing <ArrowIcon />
           </a>
         </div>
@@ -1182,7 +1182,7 @@ export default function Home() {
           <blockquote>“You remain informed, involved and prepared for what comes next.”</blockquote>
           <div>
             <span><ShieldIcon /> Confidential by design</span>
-            <a href="#contact">Begin the conversation <ArrowIcon /></a>
+            <a href="/#contact">Begin the conversation <ArrowIcon /></a>
           </div>
         </div>
 
@@ -1282,7 +1282,7 @@ export default function Home() {
           <footer className="triage-footer">
             <span>Urgent bail line · 24/7</span>
             <p>Not sure which situation fits? Start with a confidential general enquiry.</p>
-            <a href="#contact">Ask the firm <ArrowIcon /></a>
+            <a href="/#contact">Ask the firm <ArrowIcon /></a>
           </footer>
         </div>
       </section>
@@ -1336,7 +1336,7 @@ export default function Home() {
             <span><b>02</b> Strategic thinking</span>
             <span><b>03</b> Clear direction</span>
           </div>
-          <div className="founder-links"><a href="/about">Meet Ingrid&apos;s approach <ArrowIcon /></a><a href="#contact">Start a confidential conversation <ArrowIcon /></a></div>
+          <div className="founder-links"><a href="/about">Meet Ingrid&apos;s approach <ArrowIcon /></a><a href="/#contact">Start a confidential conversation <ArrowIcon /></a></div>
         </div>
         <div className="team-stack" id="team">
           <header className="team-intro">
@@ -1418,7 +1418,7 @@ export default function Home() {
           <span>Menlyn Maine · Pretoria</span>
           <span>100% female black-owned</span>
           <span>Personal + commercial counsel</span>
-          <a href="#contact">Begin a conversation <ArrowIcon /></a>
+          <a href="/#contact">Begin a conversation <ArrowIcon /></a>
         </div>
       </section>
 
@@ -1555,7 +1555,7 @@ export default function Home() {
               <span>Your first enquiry is handled with discretion.</span>
             </div>
           </div>
-          <a href="#contact">Ask your own question <ArrowIcon /></a>
+          <a href="/#contact">Ask your own question <ArrowIcon /></a>
         </aside>
         <div className="faq-desk">
           <div className="faq-desk-head">
@@ -1718,10 +1718,10 @@ export default function Home() {
           </div>
           <nav aria-label="Footer navigation">
             <span>Explore</span>
-            <a href="#expertise">Expertise</a>
+            <a href="/#expertise">Expertise</a>
             <a href="/about">The firm</a>
             <a href="/about#team">Our team</a>
-            <a href="#programme">Vacation Programme</a>
+            <a href="/#programme">Vacation Programme</a>
             <a href="/insights">Insights</a>
           </nav>
           <nav aria-label="Social and contact links">
