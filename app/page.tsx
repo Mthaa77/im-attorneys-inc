@@ -1690,7 +1690,7 @@ export default function Home() {
         <div className="footer-navigation">
           <div className="footer-signature">
             <img
-              src="/assets/im-attorneys-logo.webp"
+              src="https://im-attorneys.gee7pipz.chatgpt.site/assets/im-attorneys-incorporated-logo.webp"
               alt="Ingrid Mtsweni Attorneys Incorporated"
               width={1800}
               height={634}
