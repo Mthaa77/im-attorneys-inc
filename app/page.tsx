@@ -718,6 +718,23 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="hero-film" aria-labelledby="hero-film-title">
+        <div className="hero-film-copy">
+          <span className="section-label">A firm with presence</span>
+          <h2 id="hero-film-title">Counsel that meets the moment with <em>purpose.</em></h2>
+          <p>From the first private conversation to the final strategy, IM Attorneys brings disciplined legal thinking, human understanding and clear representation to the matters that shape what comes next.</p>
+          <div className="hero-film-points" aria-label="IM Attorneys approach"><span>Prepared</span><i aria-hidden="true" /><span>Personal</span><i aria-hidden="true" /><span>Purposeful</span></div>
+          <a className="hero-film-link" href="/about">Meet the firm <ArrowIcon /></a>
+        </div>
+        <div className="hero-film-frame">
+          <video className="hero-film-video" autoPlay loop muted playsInline preload="metadata" aria-label="IM Attorneys promotional film">
+            <source src="https://im-attorneys.gee7pipz.chatgpt.site/assets/im-attorneys-hero-film.mp4" type="video/mp4" />
+            Your browser does not support this video.
+          </video>
+          <div className="hero-film-caption" aria-hidden="true"><span>IM Attorneys · Pretoria</span><strong>Company film</strong></div>
+        </div>
+      </section>
+
       <section className="live-ticker" aria-label="IM Attorneys services and availability">
         <div className="ticker-status">
           <i aria-hidden="true" />
